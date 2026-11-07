@@ -216,6 +216,7 @@
     color: var(--muted); font-size: .9rem; border-top: 1px solid var(--rule);
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  [data-rel][hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -233,7 +234,7 @@
         </a>
         <a class="ghost" href="#install">How to install</a>
       </div>
-      <p class="facts-line">Version <span class="apk-ver">1.1</span><span class="apk-size-wrap" hidden> · <span class="apk-size"></span></span> · Android 7.1 or newer · Free, no account, no ads</p>
+      <p class="facts-line"><span data-rel="ver" hidden>Version <span class="apk-ver"></span> · </span><span class="apk-size-wrap" hidden><span class="apk-size"></span> · </span>Android 7.1 or newer · Free, no account, no ads</p>
       <div class="buildnote" id="buildNote" hidden>
         <span class="buildnote-label">This build</span>
         <p class="buildnote-text" id="buildNoteText"></p>
@@ -284,7 +285,7 @@
         Download SeeBeeArr.apk
       </a>
       <div class="facts">
-        <div><strong>SeeBeeArr.apk</strong> · Version <span class="apk-ver">1.1</span><span class="apk-size-wrap" hidden> · <span class="apk-size"></span></span></div>
+        <div><strong>SeeBeeArr.apk</strong><span data-rel="ver" hidden> · Version <span class="apk-ver"></span></span><span class="apk-size-wrap" hidden> · <span class="apk-size"></span></span></div>
         <div>Android 7.1 or newer · <a href="https://github.com/nsat-dev/seebeearr-droid/releases">Release notes</a></div>
       </div>
     </div>
@@ -479,7 +480,7 @@
 </main>
 
 <footer>
-  <p>© 2026 SeeBeeArr · Version <span class="apk-ver">1.1</span> · Android 7.1+ · <a href="https://github.com/nsat-dev/seebeearr-droid/releases/latest/download/SeeBeeArr.apk" download>Download the APK</a></p>
+  <p>© 2026 SeeBeeArr · <span data-rel="ver" hidden>Version <span class="apk-ver"></span> · </span>Android 7.1+ · <a href="https://github.com/nsat-dev/seebeearr-droid/releases/latest/download/SeeBeeArr.apk" download>Download the APK</a></p>
   <p>The sample comic, <em>Little Nemo in Slumberland</em> by Winsor McCay (1905), is in the public domain. Open-source credits are listed in the app under Help › Acknowledgements.</p>
 </footer>
 
@@ -542,7 +543,8 @@
         })
         .then(function (rel) {
           var v = releaseVersion(rel);
-          if (v) document.querySelectorAll(".apk-ver").forEach(function (e) { e.textContent = v; });
+          if (v) { document.querySelectorAll(".apk-ver").forEach(function (e) { e.textContent = v; });
+            document.querySelectorAll('[data-rel="ver"]').forEach(function(e){ e.hidden = false; }); }
           var asset = (rel.assets || []).filter(function (a) { return a.name === ASSET; })[0];
           if (asset && asset.size) {
             var mb = Math.max(1, Math.round(asset.size / 1000000)) + " MB";
